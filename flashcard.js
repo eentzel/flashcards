@@ -1,9 +1,12 @@
+/*jslint browser: true, onevar: true, undef: true, eqeqeq: true */
+/*global $ jQuery */
+
 var FLASHCARDS = (function(){
     var correct = $('.correct'),
         attempted = $('.attempted'),
         answer = $('.answer'),
         message = $('.message'),
-        round = 0;
+        round = 0,
         GAME_LENGTH = 10;
 
     function factors() {
