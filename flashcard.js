@@ -1,6 +1,11 @@
 /*jslint browser: true, onevar: true, undef: true, eqeqeq: true */
 /*global $ jQuery */
 
+jQuery.fn.toInt = function() {
+    var v = this.val() || this.text();
+    return parseInt(v, 10);
+};
+
 var FLASHCARDS = (function(){
     var correct = $('.correct'),
         attempted = $('.attempted'),
@@ -18,16 +23,16 @@ var FLASHCARDS = (function(){
     }
 
     function score() {
-        var s = parseInt( correct.text(), 10 ) / parseInt( attempted.text(), 10 );
+        var s = correct.toInt() / attempted.toInt();
         return (s * 100).toFixed(2);
     }
 
     function isCorrect() {
-        return product() === parseInt( answer.val(), 10 );
+        return product() === answer.toInt();
     }
 
     function increment(el, ceil) {
-        var val = parseInt(el.text(), 10) + 1;
+        var val = el.toInt() + 1;
         if ( ceil ) {
             val = val % ceil;
         }
