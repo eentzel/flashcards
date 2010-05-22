@@ -1,0 +1,23 @@
+td {
+    text-align: center;
+    padding: 2px 8px;
+}
+.problem {
+    font-size: 32pt;
+    font-family: arial,sans-serif;
+}
+.problem hr {
+    height: 5px;
+    color: #000;
+    background-color: #000;
+    clear: both;
+}
+.factor {
+    float: right;
+    clear: right;
+    width: 2em;
+    text-align: right;
+}
+.operator {
+    float: left;
+}
