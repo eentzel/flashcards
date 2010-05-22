@@ -76,7 +76,7 @@ var FLASHCARDS = (function(){
         increment(attempted);
         $('.score').text( score() + '%' );
         return false;
-    };
+    }
 
     function init() {
         $('form').submit(update);
