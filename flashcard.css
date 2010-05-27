@@ -22,6 +22,9 @@ td {
 .operator {
     float: left;
 }
+.message span {
+    display: block;
+}
 .operations a {
     margin-bottom: 4px;
 }

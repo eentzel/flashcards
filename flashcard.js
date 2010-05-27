@@ -39,15 +39,25 @@ var FLASHCARDS = (function(){
         el.text( val );
     }
 
+    function showMessage() {
+        var messageArgs = arguments;
+        message.children().each( function( i, el ) {
+            if ( messageArgs[i] ) {
+                el.innerHTML = messageArgs[i];
+            }
+        } );
+    }
+
     function showSucces() {
-        message.html( "Correct!<br />" + factors()[0] + " x " + factors()[1] + " = " + answer.val() + "<br />&nbsp;");
-        increment(correct);
+        var f = factors();
+        showMessage( 'Correct!', f[0] + ' &times; ' + f[1] + ' = ' + answer.val() );
     }
 
     function showFailure() {
-        message.html( "Sorry...<br />" +
-            factors()[0] + " x " + factors()[1] + " is not equal to " + answer.val() + "<br />" +
-            factors()[0] + " x " + factors()[1] + " = " + product() );
+        var f = factors();
+        showMessage( 'Sorry...',
+                     f[0] + ' &times; ' + f[1] + ' is not equal to ' + answer.val(),
+                     f[0] + ' &times; ' + f[1] + ' = ' + product() );
     }
 
     function showGameEnd() {
