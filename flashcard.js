@@ -75,7 +75,7 @@ var FLASHCARDS = (function(){
         answer.val('').focus();
     }
 
-    function startNewGame() {
+    function newGame() {
         $('.picOverlay').hide();
         $('.problem').show();
         attempted.text('0');
@@ -86,7 +86,7 @@ var FLASHCARDS = (function(){
 
     function update() {
         if ( attempted.toInt() >= GAME_LENGTH ) {
-            startNewGame();
+            newGame();
             return false;
         }
         else if ( answer.val() === '' ) {
