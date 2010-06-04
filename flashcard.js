@@ -60,7 +60,10 @@ var FLASHCARDS = (function(){
     }
 
     function showGameEnd() {
-        // TODO
+        $('.picOverlay').show();
+        $('.problem').hide();
+        showMessage( 'You got ' + correct.text() + ' out of ' + attempted.text() + ' correct.' );
+        answer.val('').focus();
     }
 
     function randInt(max) {
@@ -69,34 +72,48 @@ var FLASHCARDS = (function(){
 
     function newProblem() {
         $('.factor').each( function(idx, el) { el.innerHTML = randInt(11); } );
+        answer.val('').focus();
+    }
+
+    function startNewGame() {
+        $('.picOverlay').hide();
+        $('.problem').show();
+        attempted.text('0');
+        correct.text('0');
+        $('.score').html('&nbsp;');
+        newProblem();
     }
 
     function update() {
-        if ( answer.val() === '' ) {
+        if ( attempted.toInt() >= GAME_LENGTH ) {
+            startNewGame();
             return false;
         }
-
+        else if ( answer.val() === '' ) {
+            return false;
+        }
+        increment(attempted);
         if ( isCorrect() ) {
             showSucces();
+            increment(correct);
         }
         else {
             showFailure();
         }
-
-        // if ( round++ > GAME_LENGTH ) {
-        //     showGameEnd();
-        // }
-        // else {
-            newProblem();
-        // }
-        answer.val('').focus();
-        increment(attempted);
         $('.score').text( score() + '%' );
+        if ( attempted.toInt() >= GAME_LENGTH ) {
+            showGameEnd();
+        }
+        else {
+            newProblem();
+        }
+
         return false;
     }
 
     function init() {
         $('form').submit(update);
+        newProblem();
     }
 
     return {

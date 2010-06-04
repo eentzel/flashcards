@@ -13,6 +13,17 @@ td {
     background-color: #000;
     clear: both;
 }
+.problem, .picOverlay {
+    width: 130px;
+}
+.problem {
+    padding-top: 32px;
+    height: 142px;
+}
+.picOverlay {
+    display: none;
+    height: 174px;
+}
 .factor {
     float: right;
     clear: right;
