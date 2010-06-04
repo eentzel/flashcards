@@ -10,7 +10,6 @@ var FLASHCARDS = (function(){
     var correct = $('.correct'),
         attempted = $('.attempted'),
         answer = $('.answer'),
-        message = $('.message'),
         round = 0,
         GAME_LENGTH = 10;
 
@@ -41,7 +40,7 @@ var FLASHCARDS = (function(){
 
     function showMessage() {
         var messageArgs = arguments;
-        message.children().each( function( i, el ) {
+        $('.message').children().each( function( i, el ) {
             if ( messageArgs[i] ) {
                 el.innerHTML = messageArgs[i];
             }
