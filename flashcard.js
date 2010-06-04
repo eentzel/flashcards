@@ -49,7 +49,7 @@ var FLASHCARDS = (function(){
 
     function showSucces() {
         var f = factors();
-        showMessage( 'Correct!', f[0] + ' &times; ' + f[1] + ' = ' + answer.val() );
+        showMessage( 'Correct!', f[0] + ' &times; ' + f[1] + ' = ' + product() );
     }
 
     function showFailure() {
