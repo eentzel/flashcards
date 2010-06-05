@@ -10,6 +10,7 @@ var FLASHCARDS = (function(){
     var correct = $('.correct'),
         attempted = $('.attempted'),
         answer = $('.answer'),
+        operation = multiply,
         round = 0,
         GAME_LENGTH = 10;
 
@@ -17,8 +18,16 @@ var FLASHCARDS = (function(){
         return [].slice.call( $('.factor'), 0 ).map( function(n) { return n.innerHTML; } );
     }
 
+    function add(x, y) { return parseInt(x, 10) + parseInt(y, 10); };
+    function subtract(x, y) { return x - y; };
+    function multiply(x, y) { return x * y; };
+    function divide(x, y) { return x / y; };
     function product() {
-        return factors().reduce( function(x, y) { return x * y; } );
+        return factors().reduce( operation );
+    }
+
+    function opText() {
+        return ' ' + $('.operator').text() + ' ';
     }
 
     function score() {
@@ -49,14 +58,14 @@ var FLASHCARDS = (function(){
 
     function showSucces() {
         var f = factors();
-        showMessage( 'Correct!', f[0] + ' &times; ' + f[1] + ' = ' + product() );
+        showMessage( 'Correct!', f[0] + opText() + f[1] + ' = ' + product() );
     }
 
     function showFailure() {
         var f = factors();
         showMessage( 'Sorry...',
-                     f[0] + ' &times; ' + f[1] + ' is not equal to ' + answer.val(),
-                     f[0] + ' &times; ' + f[1] + ' = ' + product() );
+                     f[0] + opText() + f[1] + ' is not equal to ' + answer.val(),
+                     f[0] + opText() + f[1] + ' = ' + product() );
     }
 
     function showGameEnd() {
@@ -73,6 +82,26 @@ var FLASHCARDS = (function(){
     function newProblem() {
         $('.factor').each( function(idx, el) { el.innerHTML = randInt(11); } );
         answer.val('').focus();
+    }
+
+    function changeOperation(e) {
+        var name = e.currentTarget.className.match( /add|subtract|multiply|divide/ )[0];
+        $('.operator').html( e.currentTarget.innerHTML );
+        switch (name) {
+        case 'add':
+            operation = add;
+            break;
+        case 'subtract':
+            operation = subtract;
+            break;
+        case 'multiply':
+            operation = multiply;
+            break;
+        case 'divide':
+            operation = divide;
+            break;
+        }
+        e.preventDefault();
     }
 
     function newGame() {
@@ -113,6 +142,7 @@ var FLASHCARDS = (function(){
 
     function init() {
         $('form').submit(update);
+        $('.operations .button').click(changeOperation);
         newProblem();
     }
 
