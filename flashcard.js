@@ -148,6 +148,7 @@ var FLASHCARDS = (function(){
     }
 
     Add = {
+        // without parseInt(), this is interpreted as string concatenation:
         perform: function(x, y) { return parseInt(x, 10) + parseInt(y, 10); }
     };
 
