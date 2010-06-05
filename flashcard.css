@@ -36,8 +36,11 @@ td {
 .message span {
     display: block;
 }
-.operations a {
+.operations .button {
     margin-bottom: 4px;
+}
+.button.active {
+    background-color: #6ac;
 }
 .button {
     text-decoration: none;

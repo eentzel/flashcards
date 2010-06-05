@@ -85,8 +85,13 @@ var FLASHCARDS = (function(){
     }
 
     function changeOperation(e) {
-        var name = e.currentTarget.className.match( /add|subtract|multiply|divide/ )[0];
-        $('.operator').html( e.currentTarget.innerHTML );
+        var target = e.currentTarget,
+            name = target.className.match( /add|subtract|multiply|divide/ )[0];
+
+        $('.operator').html( target.innerHTML );
+        $('.operations .active').removeClass('active');
+        $(target).addClass('active');
+
         switch (name) {
         case 'add':
             operation = Add;
@@ -101,6 +106,7 @@ var FLASHCARDS = (function(){
             operation = Divide;
             break;
         }
+
         newProblem();
         e.preventDefault();
     }
