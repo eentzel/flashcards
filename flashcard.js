@@ -101,6 +101,7 @@ var FLASHCARDS = (function(){
             operation = divide;
             break;
         }
+        newProblem();
         e.preventDefault();
     }
 
