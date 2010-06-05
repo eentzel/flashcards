@@ -79,7 +79,8 @@ var FLASHCARDS = (function(){
     }
 
     function newProblem() {
-        $('.factor').each( function(idx, el) { el.innerHTML = randInt(11); } );
+        var numbers = operation.generate();
+        $('.factor').each( function(idx, el) { el.innerHTML = numbers[idx]; } );
         answer.val('').focus();
     }
 
@@ -149,19 +150,33 @@ var FLASHCARDS = (function(){
 
     Add = {
         // without parseInt(), this is interpreted as string concatenation:
-        perform: function(x, y) { return parseInt(x, 10) + parseInt(y, 10); }
+        perform: function(x, y) { return parseInt(x, 10) + parseInt(y, 10); },
+        generate: function() {
+            return [ randInt(11), randInt(11) ];
+        }
     };
 
     Subtract = {
-        perform: function(x, y) { return x - y; }
+        perform: function(x, y) { return x - y; },
+        generate: function() {
+            var first = randInt(16),
+                second = randInt(first);
+            return [first, second];
+        }
     };
 
     Multiply = {
-        perform: function(x, y) { return x * y; }
+        perform: function(x, y) { return x * y; },
+        generate: Add.generate
     };
 
     Divide = {
-        perform: function(x, y) { return x / y; }
+        perform: function(x, y) { return x / y; },
+        generate: function() {
+            var second = randInt(10) + 1,
+                first = randInt(11) * second;
+            return [first, second];
+        }
     };
 
     return {
