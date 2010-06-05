@@ -10,20 +10,19 @@ var FLASHCARDS = (function(){
     var correct = $('.correct'),
         attempted = $('.attempted'),
         answer = $('.answer'),
-        operation = multiply,
+        operation,
         round = 0,
-        GAME_LENGTH = 10;
+        GAME_LENGTH = 10,
+
+        // operation objects:
+        Add, Subtract, Multipy, Divide;
 
     function factors() {
         return [].slice.call( $('.factor'), 0 ).map( function(n) { return n.innerHTML; } );
     }
 
-    function add(x, y) { return parseInt(x, 10) + parseInt(y, 10); };
-    function subtract(x, y) { return x - y; };
-    function multiply(x, y) { return x * y; };
-    function divide(x, y) { return x / y; };
     function product() {
-        return factors().reduce( operation );
+        return factors().reduce( operation.perform );
     }
 
     function opText() {
@@ -89,16 +88,16 @@ var FLASHCARDS = (function(){
         $('.operator').html( e.currentTarget.innerHTML );
         switch (name) {
         case 'add':
-            operation = add;
+            operation = Add;
             break;
         case 'subtract':
-            operation = subtract;
+            operation = Subtract;
             break;
         case 'multiply':
-            operation = multiply;
+            operation = Multiply;
             break;
         case 'divide':
-            operation = divide;
+            operation = Divide;
             break;
         }
         newProblem();
@@ -142,10 +141,27 @@ var FLASHCARDS = (function(){
     }
 
     function init() {
+        operation = Multiply;
         $('form').submit(update);
         $('.operations .button').click(changeOperation);
         newProblem();
     }
+
+    Add = {
+        perform: function(x, y) { return parseInt(x, 10) + parseInt(y, 10); }
+    };
+
+    Subtract = {
+        perform: function(x, y) { return x - y; }
+    };
+
+    Multiply = {
+        perform: function(x, y) { return x * y; }
+    };
+
+    Divide = {
+        perform: function(x, y) { return x / y; }
+    };
 
     return {
         isCorrect: isCorrect,
