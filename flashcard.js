@@ -86,28 +86,15 @@ var FLASHCARDS = (function(){
 
     function changeOperation(e) {
         var target = e.currentTarget,
-            name = target.className.match( /add|subtract|multiply|divide/ )[0];
+            name = target.className.match( /Add|Subtract|Multiply|Divide/ )[0];
 
         $('.operator').html( target.innerHTML );
         $('.operations .active').removeClass('active');
         $(target).addClass('active');
 
-        switch (name) {
-        case 'add':
-            operation = Add;
-            break;
-        case 'subtract':
-            operation = Subtract;
-            break;
-        case 'multiply':
-            operation = Multiply;
-            break;
-        case 'divide':
-            operation = Divide;
-            break;
-        }
-
+        operation = FLASHCARDS[name];
         newProblem();
+
         e.preventDefault();
     }
 
@@ -186,8 +173,10 @@ var FLASHCARDS = (function(){
     };
 
     return {
-        isCorrect: isCorrect,
-        update: update,
+        Add: Add,
+        Subtract: Subtract,
+        Multiply: Multiply,
+        Divide: Divide,
         init: init
     };
 })();
