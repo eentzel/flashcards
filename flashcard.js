@@ -11,7 +11,6 @@ var FLASHCARDS = (function(){
         attempted = $('.attempted'),
         answer = $('.answer'),
         operation,
-        round = 0,
         GAME_LENGTH = 10,
 
         // operation objects:
