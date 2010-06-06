@@ -10,8 +10,9 @@ var FLASHCARDS = (function(){
     var correct = $('.correct'),
         attempted = $('.attempted'),
         answer = $('.answer'),
+        gameOver,
         operation,
-        GAME_LENGTH = 10,
+        GAME_LENGTH = 15,
 
         // operation objects:
         Add, Subtract, Multipy, Divide;
@@ -67,6 +68,7 @@ var FLASHCARDS = (function(){
     }
 
     function showGameEnd() {
+        gameOver = true;
         $('.picOverlay').show();
         $('.problem').hide();
         showMessage( 'You got ' + correct.text() + ' out of ' + attempted.text() + ' correct.' );
@@ -98,20 +100,21 @@ var FLASHCARDS = (function(){
     }
 
     function newGame() {
+        newProblem();
         $('.picOverlay').hide();
         $('.problem').show();
+
         attempted.text('0');
         correct.text('0');
         $('.score').html('&nbsp;');
-        newProblem();
+        $('.minutes').text(GAME_LENGTH);
+        $('.seconds').text('00');
+
+        gameOver = false;
     }
 
     function update() {
-        if ( attempted.toInt() >= GAME_LENGTH ) {
-            newGame();
-            return false;
-        }
-        else if ( answer.val() === '' ) {
+        if ( gameOver || answer.val() === '' ) {
             return false;
         }
         increment(attempted);
@@ -123,21 +126,40 @@ var FLASHCARDS = (function(){
             showFailure();
         }
         $('.score').text( score() + '%' );
-        if ( attempted.toInt() >= GAME_LENGTH ) {
-            showGameEnd();
-        }
-        else {
-            newProblem();
-        }
+        newProblem();
 
         return false;
     }
 
+    function format(n) {
+        return n > 9 ? n : '0' + n;
+    }
+
+    function startTimer() {
+        var timer = window.setInterval( function() {
+            var m = $('.minutes').toInt(),
+                s = $('.seconds').toInt();
+            s -= 1;
+            if (s === 0 && m === 0) {
+                window.clearInterval(timer);
+                showGameEnd();
+            }
+            else if (s === -1) {
+                s = 59;
+                m -= 1;
+            }
+            $('.minutes').text( format(m) );
+            $('.seconds').text( format(s) );
+        }, 1000 );
+        $('form').unbind('submit', startTimer);
+    }
+
     function init() {
         operation = Multiply;
-        $('form').submit(update);
+        $('form').submit(update).submit(startTimer);
         $('.operations .button').click(changeOperation);
-        newProblem();
+        $('.newGame').click(newGame);
+        newGame();
     }
 
     Add = {

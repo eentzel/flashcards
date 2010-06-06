@@ -3,6 +3,7 @@ td {
     padding: 2px 8px;
 }
 .operations,
+.timer,
 .problem {
     font-size: 32pt;
     font-family: arial,sans-serif;
