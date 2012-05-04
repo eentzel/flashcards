@@ -1,5 +1,10 @@
 /*jslint browser: true, onevar: true, undef: true, eqeqeq: true */
-/*global $ jQuery */
+/*global $ jQuery window */
+
+/*
+ * TODO:
+ * factor out timer class?
+ */
 
 jQuery.fn.toInt = function() {
     var v = this.val() || this.text();
@@ -15,7 +20,7 @@ var FLASHCARDS = (function(){
         GAME_LENGTH = 15,
 
         // operation objects:
-        Add, Subtract, Multipy, Divide;
+        Add, Subtract, Multiply, Divide;
 
     function factors() {
         return [].slice.call( $('.factor'), 0 ).map( function(n) { return n.innerHTML; } );
